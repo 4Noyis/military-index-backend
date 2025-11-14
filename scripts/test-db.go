@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+
+	"github.com/4Noyis/military-index-backend/config"
 )
 
 type Country struct {
