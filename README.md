@@ -2,7 +2,7 @@
 
 Military technology database and API service built with Go microservices.
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - Docker & Docker Compose
