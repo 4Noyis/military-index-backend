@@ -5,18 +5,18 @@
 ## Milestone 1.1: Project Structure Setup
 
 **tasks**
-- [ ]  Create folder structure
-- [ ]  Initialize Go workspace
-- [ ]  Create `.gitignore`
-- [ ]  Update `README.md`
+- [x]  Create folder structure
+- [x]  Initialize Go workspace
+- [x]  Create `.gitignore`
+- [x]  Update `README.md`
 ## Milestone 1.2: Shared Configuration & Database Connection
 
 **tasks**
-- [ ]  Create database configuration with GORM
-- [ ]  Implement connection pooling
-- [ ]  Add health check function
-- [ ]  Create shared models (Country, TechCategory, Technology)
-- [ ]  Test database connection
+- [x]  Create database configuration with GORM
+- [x]  Implement connection pooling
+- [x]  Add health check function
+- [x]  Create shared models (Country, TechCategory, Technology)
+- [x]  Test database connection
 
 **Code to write:**
 ```Go

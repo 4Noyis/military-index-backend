@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/4Noyis/military-index-backend/config"
+	"github.com/4Noyis/military-index-backend/shared/config"
 )
 
 type Country struct {
