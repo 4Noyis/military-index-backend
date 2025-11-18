@@ -82,17 +82,17 @@
 3. `cmd/main.go` - Entry point
 
 **Tasks:**
-- [ ]  Create HTTP handlers:
+- [x]  Create HTTP handlers:
     - `GET /api/v1/countries` - List countries
     - `GET /api/v1/countries/:id` - Get country
     - `GET /api/v1/countries/code/:code` - Get by code
     - `POST /api/v1/countries` - Create (admin)
     - `PUT /api/v1/countries/:id` - Update (admin)
     - `DELETE /api/v1/countries/:id` - Delete (admin)
-- [ ]  Add request validation
-- [ ]  Add response formatting
-- [ ]  Create router with Gin
-- [ ]  Create main.go with graceful shutdown
+- [x]  Add request validation
+- [x]  Add response formatting
+- [x]  Create router with Gin
+- [x]  Create main.go with graceful shutdown
 
 **Test:** All endpoints work via curl/Postman
 ## Milestone 2.4: Country Service - Dockerization
