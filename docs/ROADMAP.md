@@ -68,11 +68,11 @@
 1. `internal/service/country_service.go` - Business logic
 
 **Tasks:**
-- [ ]  Create service interface
-- [ ]  Implement business logic
-- [ ]  Add validation
-- [ ]  Add error handling
-- [ ]  Add logging
+- [x]  Create service interface
+- [x]  Implement business logic
+- [x]  Add validation
+- [x]  Add error handling
+- [x]  Add logging
 
 ## Milestone 2.3: Country Service - HTTP Handlers
 
