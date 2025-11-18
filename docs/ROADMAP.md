@@ -35,10 +35,10 @@
 4. `shared/utils/response.go` - Standardized API responses
 
 **Tasks:**
-- [ ]  Create CORS middleware
-- [ ]  Create logging middleware
-- [ ]  Create error handler middleware
-- [ ]  Create response utilities (success, error)
+- [x]  Create CORS middleware
+- [x]  Create logging middleware
+- [x]  Create error handler middleware
+- [x]  Create response utilities (success, error)
 
 # Phase 2: Country Service
 ## Milestone 2.1: Country Service - Repository Layer
