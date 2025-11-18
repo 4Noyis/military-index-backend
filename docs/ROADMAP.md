@@ -50,17 +50,17 @@
 2. `internal/repository/country_repository.go` - Database operations
 
 **Tasks:**
-- [ ]  Initialize Go module: `go mod init`
-- [ ]  Create repository interface
-- [ ]  Implement CRUD operations:
+- [x]  Initialize Go module: `go mod init`
+- [x]  Create repository interface
+- [x]  Implement CRUD operations:
     - `GetAll()` - List all countries
     - `GetByID()` - Get single country
     - `GetByCode()` - Get by country code
     - `Create()` - Add new country (admin)
     - `Update()` - Update country (admin)
     - `Delete()` - Delete country (admin)
-- [ ]  Add pagination support
-- [ ]  Add filtering/search
+- [x]  Add pagination support
+- [x]  Add filtering/search
 
 ## Milestone 2.2: Country Service - Service Layer
 
