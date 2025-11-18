@@ -103,10 +103,10 @@
 2. Update `docker-compose.yml` - Add service
 
 **Tasks:**
-- [ ]  Create optimized Dockerfile (multi-stage build)
-- [ ]  Add service to docker-compose.yml
-- [ ]  Test container builds and runs
-- [ ]  Verify service connects to database in Docker
+- [x]  Create optimized Dockerfile (multi-stage build)
+- [x]  Add service to docker-compose.yml
+- [x]  Test container builds and runs
+- [x]  Verify service connects to database in Docker
 
 **Test:** Service runs in Docker and responds to requests
 
