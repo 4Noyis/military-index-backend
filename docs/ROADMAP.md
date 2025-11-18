@@ -82,17 +82,17 @@
 3. `cmd/main.go` - Entry point
 
 **Tasks:**
-- [ ]  Create HTTP handlers:
+- [x]  Create HTTP handlers:
     - `GET /api/v1/countries` - List countries
     - `GET /api/v1/countries/:id` - Get country
     - `GET /api/v1/countries/code/:code` - Get by code
     - `POST /api/v1/countries` - Create (admin)
     - `PUT /api/v1/countries/:id` - Update (admin)
     - `DELETE /api/v1/countries/:id` - Delete (admin)
-- [ ]  Add request validation
-- [ ]  Add response formatting
-- [ ]  Create router with Gin
-- [ ]  Create main.go with graceful shutdown
+- [x]  Add request validation
+- [x]  Add response formatting
+- [x]  Create router with Gin
+- [x]  Create main.go with graceful shutdown
 
 **Test:** All endpoints work via curl/Postman
 ## Milestone 2.4: Country Service - Dockerization
@@ -161,7 +161,7 @@
 3. `cmd/main.go` - Entry point
 
 **Tasks:**
-- [ ]  Create HTTP handlers:
+- [x]  Create HTTP handlers:
     - `GET /api/v1/technologies` - List all (with filters)
     - `GET /api/v1/technologies/:id` - Get single
     - `GET /api/v1/technologies/country/:country_id` - By country
@@ -170,11 +170,11 @@
     - `POST /api/v1/technologies` - Create
     - `PUT /api/v1/technologies/:id` - Update
     - `DELETE /api/v1/technologies/:id` - Delete
-- [ ]  Add query parameters (filter, sort, page, limit)
-- [ ]  Add request validation
-- [ ]  Response formatting with related data
-- [ ]  Setup router
-- [ ]  Create main.go
+- [x]  Add query parameters (filter, sort, page, limit)
+- [x]  Add request validation
+- [x]  Response formatting with related data
+- [x]  Setup router
+- [x]  Create main.go
 
 **Test:** All endpoints work
 ## Milestone 3.4: Technology Service - Dockerization
