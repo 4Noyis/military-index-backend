@@ -131,10 +131,10 @@
     - `Create()` - Add technology
     - `Update()` - Update technology
     - `Delete()` - Delete technology
-- [ ]  Add complex queries (joins with countries/categories)
-- [ ]  Add pagination
-- [ ]  Add sorting
-- [ ]  Add search functionality
+- [x]  Add complex queries (joins with countries/categories)
+- [x]  Add pagination
+- [x]  Add sorting
+- [x]  Add search functionality
 
 **Test:** All repository functions work
 

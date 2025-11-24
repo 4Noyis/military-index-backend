@@ -24,9 +24,9 @@ func main() {
 	repo := repository.NewTechnologyRepository(db)
 	ctx := context.Background()
 
-	// Test 1: GetAll with pagination
-	fmt.Println("--- Test 1: GetAll (page=1, limit=5) ---")
-	technologies, total, err := repo.GetAll(ctx, 1, 5)
+	// Test 1: GetAll with pagination and sorting
+	fmt.Println("--- Test 1: GetAll (page=1, limit=5, sort=name, order=asc) ---")
+	technologies, total, err := repo.GetAll(ctx, 1, 5, "name", "asc")
 	if err != nil {
 		log.Printf("❌ GetAll failed: %v\n", err)
 	} else {
@@ -46,10 +46,10 @@ func main() {
 	}
 	fmt.Println()
 
-	fmt.Println("--- Test 3: GetByCountry (ID=TUR) ---")
-	technologiesByCountry, total, err := repo.GetByCountry(ctx, "TUR")
+	fmt.Println("--- Test 3: GetByCountry (code=TUR, page=1, limit=10) ---")
+	technologiesByCountry, total, err := repo.GetByCountry(ctx, "TUR", 1, 10)
 	if err != nil {
-		log.Printf("❌ GetAll failed: %v\n", err)
+		log.Printf("❌ GetByCountry failed: %v\n", err)
 	} else {
 		fmt.Printf("✅ Found %d technologies (total: %d)\n", len(technologiesByCountry), total)
 		for _, c := range technologiesByCountry {
@@ -58,10 +58,10 @@ func main() {
 	}
 	fmt.Println()
 
-	fmt.Println("--- Test 4: GetByCountry (Category: Aircraft) ---")
-	technologiesByCategory, total, err := repo.GetByCategory(ctx, "Aircraft")
+	fmt.Println("--- Test 4: GetByCategory (category=Aircraft, page=1, limit=10) ---")
+	technologiesByCategory, total, err := repo.GetByCategory(ctx, "Aircraft", 1, 10)
 	if err != nil {
-		log.Printf("❌ GetByCountry failed: %v\n", err)
+		log.Printf("❌ GetByCategory failed: %v\n", err)
 	} else {
 		fmt.Printf("✅ Found %d technologies (total: %d)\n", len(technologiesByCategory), total)
 		for _, c := range technologiesByCategory {
@@ -70,8 +70,8 @@ func main() {
 	}
 	fmt.Println()
 
-	fmt.Println("--- Test 5: GetByStatus (status = current) ---")
-	technologiesByStatus, total, err := repo.GetByStatus(ctx, "current")
+	fmt.Println("--- Test 5: GetByStatus (status=current, page=1, limit=10) ---")
+	technologiesByStatus, total, err := repo.GetByStatus(ctx, "current", 1, 10)
 	if err != nil {
 		log.Printf("❌ GetByStatus failed: %v\n", err)
 	} else {
@@ -82,8 +82,8 @@ func main() {
 	}
 	fmt.Println()
 
-	fmt.Println("--- Test 6: GetByYearRange (2002-2025) ---")
-	technologiesByYearRange, total, err := repo.GetByYearRange(ctx, 2002, 2025)
+	fmt.Println("--- Test 6: GetByYearRange (2002-2025, page=1, limit=10) ---")
+	technologiesByYearRange, total, err := repo.GetByYearRange(ctx, 2002, 2025, 1, 10)
 	if err != nil {
 		log.Printf("❌ GetByYearRange failed: %v\n", err)
 	} else {
@@ -94,6 +94,19 @@ func main() {
 			} else {
 				fmt.Printf("   - %s | %s | N/A\n", c.Name, c.Description)
 			}
+		}
+	}
+	fmt.Println()
+
+	// Test 6b: Search
+	fmt.Println("--- Test 6b: Search (query=Bayraktar, page=1, limit=10) ---")
+	searchResults, total, err := repo.Search(ctx, "Bayraktar", 1, 10)
+	if err != nil {
+		log.Printf("❌ Search failed: %v\n", err)
+	} else {
+		fmt.Printf("✅ Found %d technologies (total: %d)\n", len(searchResults), total)
+		for _, c := range searchResults {
+			fmt.Printf("   - %s | %s | %s\n", c.Name, c.Category.Name, c.Country.Code)
 		}
 	}
 	fmt.Println()
