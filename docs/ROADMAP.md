@@ -144,12 +144,12 @@
 1. `internal/service/technology_service.go` - Business logic
 
 **Tasks:**
-- [ ]  Create service interface
-- [ ]  Implement business logic
-- [ ]  Add data validation (year ranges, status values)
+- [x]  Create service interface
+- [x]  Implement business logic
+- [x]  Add data validation (year ranges, status values)
 - [ ]  Add tech tree logic (if needed)
 - [ ]  Add statistics functions (count by country, category)
-- [ ]  Error handling and logging
+- [x]  Error handling and logging
 
 **Test:** Service layer works correctly
 
