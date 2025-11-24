@@ -119,9 +119,9 @@
 2. `internal/repository/technology_repository.go` - Database operations
 
 **Tasks:**
-- [ ]  Initialize Go module
-- [ ]  Create repository interface
-- [ ]  Implement CRUD operations:
+- [x]  Initialize Go module
+- [x]  Create repository interface
+- [x]  Implement CRUD operations:
     - `GetAll()` - List all technologies
     - `GetByID()` - Get single technology
     - `GetByCountry()` - List by country
