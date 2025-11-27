@@ -92,6 +92,30 @@ services:
       - military-index-network
     restart: unless-stopped
 
+  # Technology Service
+  technology-service:
+    build:
+      context: ..
+      dockerfile: services/technology-service/Dockerfile
+    container_name: military_index_technology_service
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-militaryindex}
+      DB_PASSWORD: ${DB_PASSWORD:-CokGucluSifre}
+      DB_NAME: ${DB_NAME:-military_index_db}
+      DB_SSLMODE: disable
+      TECHNOLOGY_SERVICE_PORT: 8081
+      APP_ENV: development
+    ports:
+      - "${TECHNOLOGY_SERVICE_PORT:-8081}:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - military-index-network
+    restart: unless-stopped
+
 volumes:
   postgres_data:
     driver: local

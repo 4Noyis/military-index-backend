@@ -186,10 +186,10 @@
 2. Update `docker-compose.yml`
 
 **Tasks:**
-- [ ]  Create Dockerfile
-- [ ]  Add to docker-compose.yml
-- [ ]  Test in Docker
-- [ ]  Verify database connectivity
+- [x]  Create Dockerfile
+- [x]  Add to docker-compose.yml
+- [x]  Test in Docker
+- [x]  Verify database connectivity
 
 **Test:** Service runs in Docker
 
