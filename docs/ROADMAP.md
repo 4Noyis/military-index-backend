@@ -161,20 +161,22 @@
 3. `cmd/main.go` - Entry point
 
 **Tasks:**
-- []  Create HTTP handlers:
+- [x]  Create HTTP handlers:
     - `GET /api/v1/technologies` - List all (with filters)
     - `GET /api/v1/technologies/:id` - Get single
-    - `GET /api/v1/technologies/country/:country_id` - By country
-    - `GET /api/v1/technologies/category/:category_id` - By category
-    - `GET /api/v1/technologies/search?q=query` - Search
+    - `GET /api/v1/technologies/country/:code` - By country
+    - `GET /api/v1/technologies/category/:name` - By category
+    - `GET /api/v1/technologies/status/:status` - By status
+    - `GET /api/v1/technologies/year-range?start=X&end=Y` - By year range
+    - `GET /api/v1/technologies?q=query` - Search
     - `POST /api/v1/technologies` - Create
     - `PUT /api/v1/technologies/:id` - Update
     - `DELETE /api/v1/technologies/:id` - Delete
-- []  Add query parameters (filter, sort, page, limit)
-- []  Add request validation
-- []  Response formatting with related data
-- []  Setup router
-- []  Create main.go
+- [x]  Add query parameters (filter, sort, page, limit)
+- [x]  Add request validation
+- [x]  Response formatting with related data
+- [x]  Setup router
+- [x]  Create main.go
 
 **Test:** All endpoints work
 ## Milestone 3.4: Technology Service - Dockerization
