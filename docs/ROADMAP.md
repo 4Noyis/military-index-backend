@@ -204,15 +204,14 @@
 3. `cmd/main.go` - Entry point
 
 **Tasks:**
-- [ ]  Initialize Go module
-- [ ]  Create reverse proxy using `httputil.ReverseProxy`
-- [ ]  Setup routing to microservices:
+- [x]  Initialize Go module
+- [x]  Create reverse proxy using `httputil.ReverseProxy`
+- [x]  Setup routing to microservices:
     - `/api/v1/countries/*` → Country Service
     - `/api/v1/technologies/*` → Technology Service
-    - `/api/v1/categories/*` → Technology Service
-- [ ]  Add health check endpoint
-- [ ]  Configure CORS
-- [ ]  Add request logging
+- [x]  Add health check endpoint
+- [x]  Configure CORS
+- [x]  Add request logging
 
 **Test:** Gateway routes to correct services
 
