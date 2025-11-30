@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -175,8 +176,22 @@ func getClientIP(r *http.Request) string {
 		return xri
 	}
 
-	// Fall back to RemoteAddr
-	return r.RemoteAddr
+	// Fall back to RemoteAddr, strip port
+	ip := r.RemoteAddr
+	// Remove port if present (IPv4: "IP:port", IPv6: "[IP]:port")
+	if idx := strings.LastIndex(ip, ":"); idx != -1 {
+		// Check if it's IPv6 with brackets
+		if strings.HasPrefix(ip, "[") && strings.Contains(ip[idx:], "]") {
+			// IPv6 format [::1]:port - keep everything before the last colon
+			ip = ip[:idx]
+			// Remove brackets
+			ip = strings.Trim(ip, "[]")
+		} else {
+			// IPv4 format 127.0.0.1:port - keep everything before the last colon
+			ip = ip[:idx]
+		}
+	}
+	return ip
 }
 
 // getEnvInt gets an integer environment variable or returns default
