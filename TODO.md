@@ -7,17 +7,17 @@ Week 1: Foundation
 
 Week 2: Country Service
 
-- [ ] Repository layer
-- [ ] Service layer
-- [ ] HTTP handlers
-- [ ] Dockerization
+- [x] Repository layer
+- [x] Service layer
+- [x] HTTP handlers
+- [x] Dockerization
 
 Week 3: Technology Service
 
-- [ ] Repository layer
-- [ ] Service layer
-- [ ] HTTP handlers
-- [ ] Dockerization
+- [x] Repository layer
+- [x] Service layer
+- [x] HTTP handlers
+- [x] Dockerization
 
 Week 4: API Gateway
 
