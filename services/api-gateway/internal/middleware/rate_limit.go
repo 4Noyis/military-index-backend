@@ -36,7 +36,7 @@ type RateLimiter struct {
 func NewRateLimiter() *RateLimiter {
 	// Get configuration from environment variables
 	requestsPerMinute := getEnvInt("RATE_LIMIT_REQUESTS_PER_MINUTE", 60)
-	
+
 	capacity := float64(requestsPerMinute)
 	refillRate := capacity / 60.0 // tokens per second
 
@@ -101,7 +101,7 @@ func (tb *TokenBucket) consume() bool {
 // startCleanup starts a background goroutine to clean up old entries
 func (rl *RateLimiter) startCleanup() {
 	rl.cleanupTicker = time.NewTicker(5 * time.Minute)
-	
+
 	go func() {
 		for range rl.cleanupTicker.C {
 			rl.cleanup()
@@ -151,7 +151,7 @@ func (rl *RateLimiter) Middleware(next http.Handler) http.Handler {
 			w.Header().Set("X-RateLimit-Limit", strconv.FormatFloat(rl.capacity, 'f', 0, 64))
 			w.Header().Set("Retry-After", "60")
 			w.WriteHeader(http.StatusTooManyRequests)
-			
+
 			json.NewEncoder(w).Encode(map[string]interface{}{
 				"success": false,
 				"error": map[string]string{
@@ -179,7 +179,6 @@ func getClientIP(r *http.Request) string {
 		return xri
 	}
 
-<<<<<<< HEAD
 	// Fall back to RemoteAddr, strip port
 	ip := r.RemoteAddr
 	// Remove port if present (IPv4: "IP:port", IPv6: "[IP]:port")
@@ -196,10 +195,6 @@ func getClientIP(r *http.Request) string {
 		}
 	}
 	return ip
-=======
-	// Fall back to RemoteAddr
-	return r.RemoteAddr
->>>>>>> 79fbaca (add: rate limiter)
 }
 
 // getEnvInt gets an integer environment variable or returns default
