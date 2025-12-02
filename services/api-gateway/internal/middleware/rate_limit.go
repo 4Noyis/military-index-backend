@@ -6,7 +6,10 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+<<<<<<< HEAD
 	"strings"
+=======
+>>>>>>> 79fbaca (add: rate limiter)
 	"sync"
 	"time"
 )
@@ -176,6 +179,7 @@ func getClientIP(r *http.Request) string {
 		return xri
 	}
 
+<<<<<<< HEAD
 	// Fall back to RemoteAddr, strip port
 	ip := r.RemoteAddr
 	// Remove port if present (IPv4: "IP:port", IPv6: "[IP]:port")
@@ -192,6 +196,10 @@ func getClientIP(r *http.Request) string {
 		}
 	}
 	return ip
+=======
+	// Fall back to RemoteAddr
+	return r.RemoteAddr
+>>>>>>> 79fbaca (add: rate limiter)
 }
 
 // getEnvInt gets an integer environment variable or returns default
