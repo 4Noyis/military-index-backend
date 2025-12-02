@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/4Noyis/military-index-backend/services/api-gateway/internal/middleware"
 	"github.com/4Noyis/military-index-backend/services/api-gateway/internal/proxy"
 )
 
@@ -66,8 +67,11 @@ func (g *Gateway) SetupRoutes() http.Handler {
 	// Root handler - must be last
 	mux.HandleFunc("/", g.rootHandler)
 
-	// Apply CORS middleware
-	handler := corsMiddleware(mux)
+	// Apply middleware stack
+	// Order: Rate Limit -> CORS -> Logging
+	rateLimiter := middleware.NewRateLimiter()
+	handler := rateLimiter.Middleware(mux)
+	handler = corsMiddleware(handler)
 	handler = loggingMiddleware(handler)
 
 	return handler
