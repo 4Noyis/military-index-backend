@@ -233,10 +233,10 @@
 ## Milestone 4.3: API Gateway - Dockerization
 
 **Tasks:**
-- [ ]  Create Dockerfile
-- [ ]  Update docker-compose.yml
-- [ ]  Configure service discovery
-- [ ]  Test full stack in Docker
+- [x]  Create Dockerfile
+- [x]  Update docker-compose.yml
+- [x]  Configure service discovery
+- [x]  Test full stack in Docker
 
 # Phase 5: Documentation & Testing
 ## Milestone 5.1: API Documentation
