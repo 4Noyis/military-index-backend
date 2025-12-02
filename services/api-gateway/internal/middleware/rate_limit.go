@@ -6,10 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-<<<<<<< HEAD
 	"strings"
-=======
->>>>>>> 79fbaca (add: rate limiter)
 	"sync"
 	"time"
 )
