@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   #PostgreSQL Database
   postgres:
@@ -112,6 +110,27 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - military-index-network
+    restart: unless-stopped
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ..
+      dockerfile: services/api-gateway/Dockerfile
+    container_name: military_index_api_gateway
+    environment:
+      API_GATEWAY_PORT: 8080
+      TECHNOLOGY_SERVICE_URL: http://technology-service:8081
+      COUNTRY_SERVICE_URL: http://country-service:8082
+      RATE_LIMIT_REQUESTS_PER_MINUTE: ${RATE_LIMIT_REQUESTS_PER_MINUTE:-60}
+      APP_ENV: development
+    ports:
+      - "${API_GATEWAY_PORT:-8080}:8080"
+    depends_on:
+      - technology-service
+      - country-service
     networks:
       - military-index-network
     restart: unless-stopped

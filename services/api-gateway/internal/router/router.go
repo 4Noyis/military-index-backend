@@ -48,14 +48,22 @@ func (g *Gateway) SetupRoutes() http.Handler {
 	mux := http.NewServeMux()
 
 	// Route to Technology Service
-	// All /api/v1/technologies/* routes go to technology-service
+	// All /api/v1/technologies routes (with or without trailing slash) go to technology-service
+	mux.HandleFunc("/api/v1/technologies", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Routing %s %s to technology-service", r.Method, r.URL.Path)
+		g.technologyProxy.ServeHTTP(w, r)
+	})
 	mux.HandleFunc("/api/v1/technologies/", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Routing %s %s to technology-service", r.Method, r.URL.Path)
 		g.technologyProxy.ServeHTTP(w, r)
 	})
 
 	// Route to Country Service
-	// All /api/v1/countries/* routes go to country-service
+	// All /api/v1/countries routes (with or without trailing slash) go to country-service
+	mux.HandleFunc("/api/v1/countries", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Routing %s %s to country-service", r.Method, r.URL.Path)
+		g.countryProxy.ServeHTTP(w, r)
+	})
 	mux.HandleFunc("/api/v1/countries/", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Routing %s %s to country-service", r.Method, r.URL.Path)
 		g.countryProxy.ServeHTTP(w, r)

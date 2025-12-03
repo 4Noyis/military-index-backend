@@ -31,6 +31,13 @@ func NewServiceProxy(serviceName, targetURL string) (*ServiceProxy, error) {
 		req.Host = url.Host
 		req.Header.Set("X-Forwarded-Host", req.Host)
 		req.Header.Set("X-Origin-Host", url.Host)
+
+		// Strip trailing slash from paths ending with /api/v1/{service}/
+		// but keep trailing slashes for paths with additional segments
+		path := req.URL.Path
+		if path == "/api/v1/technologies/" || path == "/api/v1/countries/" {
+			req.URL.Path = path[:len(path)-1]
+		}
 	}
 
 	// Add error handling
