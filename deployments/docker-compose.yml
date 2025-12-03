@@ -1,0 +1,146 @@
+services:
+  #PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: military_index_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-militaryindex}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-CokGucluSifre}
+      POSTGRES_DB: ${DB_NAME:-military_index_db}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=en_US.UTF-8"
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../migrations/000001_init_schema.up.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ../scripts/seed-data.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER:-militaryindex} -d ${DB_NAME:-military_index_db}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - military-index-network
+
+  # For database management UI
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: military_index_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - military-index-network
+    profiles:
+      - dev # Only runs in dev profile
+
+  # Migration tool (using golang-migrate)
+  migrate:
+    image: migrate/migrate:latest
+    container_name: military_index_migrate
+    volumes:
+      - ./migrations:/migrations
+    command:
+      - "-path=/migrations"
+      - "-database=postgresql://${DB_USER:-militaryindex}:${DB_PASSWORD:-SecurePassword123}@postgres:5432/${DB_NAME:-military_index_db}?sslmode=disable"
+      - "up"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - military-index-network
+    profiles:
+      - tools
+
+  # Country Service
+  country-service:
+    build:
+      context: ..
+      dockerfile: services/country-service/Dockerfile
+    container_name: military_index_country_service
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-militaryindex}
+      DB_PASSWORD: ${DB_PASSWORD:-CokGucluSifre}
+      DB_NAME: ${DB_NAME:-military_index_db}
+      DB_SSLMODE: disable
+      COUNTRY_SERVICE_PORT: 8082
+      APP_ENV: development
+    ports:
+      - "${COUNTRY_SERVICE_PORT:-8082}:8082"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - military-index-network
+    restart: unless-stopped
+
+  # Technology Service
+  technology-service:
+    build:
+      context: ..
+      dockerfile: services/technology-service/Dockerfile
+    container_name: military_index_technology_service
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-militaryindex}
+      DB_PASSWORD: ${DB_PASSWORD:-CokGucluSifre}
+      DB_NAME: ${DB_NAME:-military_index_db}
+      DB_SSLMODE: disable
+      TECHNOLOGY_SERVICE_PORT: 8081
+      APP_ENV: development
+    ports:
+      - "${TECHNOLOGY_SERVICE_PORT:-8081}:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - military-index-network
+    restart: unless-stopped
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ..
+      dockerfile: services/api-gateway/Dockerfile
+    container_name: military_index_api_gateway
+    environment:
+      API_GATEWAY_PORT: 8080
+      TECHNOLOGY_SERVICE_URL: http://technology-service:8081
+      COUNTRY_SERVICE_URL: http://country-service:8082
+      RATE_LIMIT_REQUESTS_PER_MINUTE: ${RATE_LIMIT_REQUESTS_PER_MINUTE:-60}
+      APP_ENV: development
+    ports:
+      - "${API_GATEWAY_PORT:-8080}:8080"
+    depends_on:
+      - technology-service
+      - country-service
+    networks:
+      - military-index-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  military-index-network:
+    driver: bridge
