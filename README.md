@@ -13,7 +13,7 @@ Military technology database and API service built with Go microservices.
 
 1. **Clone the repository**
 ```bash
-   git clone https://github.com/yourusername/military-index-backend.git
+   git clone https://github.com/4noyis/military-index-backend.git
    cd military-index-backend
 ```
 
@@ -40,10 +40,22 @@ Military technology database and API service built with Go microservices.
 
 ## 📚 Documentation
 
-- [Setup Guide](docs/SETUP.md)
-- [API Documentation](docs/API.md)
-- [Contributing Guide](docs/CONTRIBUTING.md)
-- [Deployment Guide](docs/DEPLOYMENT.md)
+### Getting Started
+- [Setup Guide](docs/SETUP.md) - Installation and configuration
+- [API Documentation](docs/API.md) - Complete API reference with examples
+- [Postman Guide](docs/POSTMAN_GUIDE.md) - Using Postman collection
+
+### Architecture & Design
+- [Architecture Documentation](docs/ARCHITECTURE.md) - System design and architecture
+- [Testing Guide](docs/TESTING.md) - Testing strategy and coverage
+
+### Operations
+- [Deployment Guide](docs/DEPLOYMENT.md) - Production deployment options
+- [FAQ](docs/FAQ.md) - Frequently asked questions
+
+### Development
+- [Contributing Guide](docs/CONTRIBUTING.md) - How to contribute
+- [Roadmap](docs/ROADMAP.md) - Project roadmap and progress
 
 ## 🏗️ Architecture
 ```
