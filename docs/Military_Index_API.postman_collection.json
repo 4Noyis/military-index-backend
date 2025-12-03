@@ -1,0 +1,497 @@
+{
+  "info": {
+    "name": "Military Index API",
+    "description": "Military technology database API - Comprehensive collection of all endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Get API Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Check the health status of the API Gateway"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Countries",
+      "item": [
+        {
+          "name": "Get All Countries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/countries?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "countries"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Items per page"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of all countries"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Country by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/countries/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "countries", "1"]
+            },
+            "description": "Retrieve a single country by its ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Country by Code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/countries/code/TUR",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "countries", "code", "TUR"]
+            },
+            "description": "Retrieve a country by its ISO country code"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Countries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/countries?q=Turkey",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "countries"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Turkey",
+                  "description": "Search query"
+                }
+              ]
+            },
+            "description": "Search countries by name or code"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Country",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"South Korea\",\n  \"code\": \"KOR\",\n  \"flag_url\": \"/flags/korea.svg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/countries",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "countries"]
+            },
+            "description": "Create a new country (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Country",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Republic of Turkey\",\n  \"code\": \"TUR\",\n  \"flag_url\": \"/flags/turkey.svg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/countries/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "countries", "1"]
+            },
+            "description": "Update an existing country (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Country",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/countries/13",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "countries", "13"]
+            },
+            "description": "Delete a country (Admin only)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Technologies",
+      "item": [
+        {
+          "name": "Get All Technologies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies?page=1&limit=10&sort=name&order=asc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Items per page"
+                },
+                {
+                  "key": "sort",
+                  "value": "name",
+                  "description": "Sort field (id, name, year_developed, year_deployed)"
+                },
+                {
+                  "key": "order",
+                  "value": "asc",
+                  "description": "Sort order (asc, desc)"
+                }
+              ]
+            },
+            "description": "Retrieve a paginated list of all technologies"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Technology by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "1"]
+            },
+            "description": "Retrieve a single technology by its ID with related country and category"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Technologies by Country",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/country/TUR?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "country", "TUR"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve all technologies from a specific country (TUR, USA, RUS, etc.)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Technologies by Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/category/Drones?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "category", "Drones"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve all technologies in a specific category (Aircraft, Naval, Drones, etc.)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Technologies by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/status/current?page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "status", "current"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve technologies by status (historical, current, future, concept, prototype)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Technologies by Year Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/year-range?start=2014&end=2024&page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "year-range"],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "2014",
+                  "description": "Start year"
+                },
+                {
+                  "key": "end",
+                  "value": "2024",
+                  "description": "End year"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Retrieve technologies developed or deployed within a specific year range"
+          },
+          "response": []
+        },
+        {
+          "name": "Search Technologies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies?q=bayraktar&page=1&limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "bayraktar",
+                  "description": "Search query"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Search technologies by name using full-text search"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Technology",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"country_id\": 1,\n  \"category_id\": 6,\n  \"name\": \"Bayraktar Kızılelma\",\n  \"description\": \"Unmanned fighter jet with stealth capabilities\",\n  \"designer\": \"Baykar\",\n  \"year_developed\": 2023,\n  \"year_deployed\": 2025,\n  \"manufacturer\": \"Baykar Makina\",\n  \"unit_cost\": 20000000,\n  \"mass\": 6000,\n  \"length\": 1450,\n  \"width\": 1400,\n  \"height\": 380,\n  \"status\": \"prototype\",\n  \"image_url\": \"/images/kizilelma.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies"]
+            },
+            "description": "Create a new military technology (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Technology",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"country_id\": 1,\n  \"category_id\": 1,\n  \"name\": \"KAAN (TF-X)\",\n  \"description\": \"Fifth-generation stealth multirole fighter aircraft with advanced avionics\",\n  \"designer\": \"TAI\",\n  \"year_developed\": 2023,\n  \"year_deployed\": 2029,\n  \"manufacturer\": \"Turkish Aerospace Industries\",\n  \"unit_cost\": 120000000,\n  \"mass\": 27000,\n  \"length\": 2100,\n  \"width\": 1400,\n  \"height\": 550,\n  \"status\": \"prototype\",\n  \"image_url\": \"/images/kaan.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "1"]
+            },
+            "description": "Update an existing technology (Admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Technology",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/7",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "7"]
+            },
+            "description": "Delete a technology (Admin only)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Examples - Common Workflows",
+      "item": [
+        {
+          "name": "Example: Get Turkish Drones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/country/TUR",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "country", "TUR"]
+            },
+            "description": "Example: Find all Turkish military technologies then filter by category=Drones"
+          },
+          "response": []
+        },
+        {
+          "name": "Example: Get Recent Technologies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/year-range?start=2020&end=2025",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "year-range"],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "2020"
+                },
+                {
+                  "key": "end",
+                  "value": "2025"
+                }
+              ]
+            },
+            "description": "Example: Get all technologies developed between 2020-2025"
+          },
+          "response": []
+        },
+        {
+          "name": "Example: Get All Aircraft",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/category/Aircraft",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "category", "Aircraft"]
+            },
+            "description": "Example: Get all military aircraft technologies"
+          },
+          "response": []
+        },
+        {
+          "name": "Example: Get Prototype Technologies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/technologies/status/prototype",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "technologies", "status", "prototype"]
+            },
+            "description": "Example: Get all technologies currently in prototype phase"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
