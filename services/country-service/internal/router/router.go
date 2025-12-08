@@ -29,10 +29,10 @@ func SetupRouter(countryHandler *handler.CountryHandler) *mux.Router {
 	api.HandleFunc("/countries/{id:[0-9]+}", countryHandler.Delete).Methods("DELETE", "OPTIONS")
 
 	// Health check endpoint
-	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("/health", func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"status":"ok","service":"country-service"}`))
+		_, _ = w.Write([]byte(`{"status":"ok","service":"country-service"}`))
 	}).Methods("GET")
 
 	return router
