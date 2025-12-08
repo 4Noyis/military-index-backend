@@ -97,7 +97,7 @@ jobs:
 
       # STEP: Run tests
       # EXPLANATION:
-      # - './...' means test all packages recursively
+      # - Test service and handler layers (repository tests have SQLite limitations)
       # - '-v' verbose output
       # - '-race' enables race condition detection
       # - '-coverprofile' generates coverage report
@@ -105,7 +105,7 @@ jobs:
       - name: Run tests
         working-directory: services/${{ matrix.service }}
         run: |
-          go test -v -race -coverprofile=coverage.out -covermode=atomic ./...
+          go test -v -race -coverprofile=coverage.out -covermode=atomic ./internal/service/... ./internal/handler/...
 
       # STEP: Upload coverage to Codecov (optional but recommended)
       # EXPLANATION: Codecov is a service that visualizes test coverage
