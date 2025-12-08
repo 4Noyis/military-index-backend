@@ -1,0 +1,75 @@
+# Codecov Configuration
+# EXPLANATION: This file customizes how Codecov analyzes your coverage reports
+
+# Coverage targets
+coverage:
+  # EXPLANATION: Set precision for coverage percentages (2 = 87.54%)
+  precision: 2
+
+  # EXPLANATION: Round coverage numbers (down/up/nearest)
+  round: down
+
+  # EXPLANATION: Coverage range for color coding
+  # Red = <70%, Yellow = 70-85%, Green = >85%
+  range: "70...100"
+
+  # EXPLANATION: Status checks that appear on pull requests
+  status:
+    # Project-level coverage (overall codebase)
+    project:
+      default:
+        # EXPLANATION: Target coverage percentage
+        target: 70%
+
+        # EXPLANATION: Allow coverage to drop by this much without failing
+        threshold: 2%
+
+        # EXPLANATION: Only fail if coverage drops
+        if_ci_failed: error
+
+    # Patch coverage (only new code in PR)
+    patch:
+      default:
+        # EXPLANATION: Require 80% coverage on new code
+        target: 80%
+
+        # EXPLANATION: Only show if patch adds 10+ lines
+        threshold: 10
+
+        # EXPLANATION: Only check coverage on new code changes
+        only_pulls: true
+
+# EXPLANATION: Post comments on pull requests with coverage info
+comment:
+  # Enable PR comments
+  require_changes: true  # Only comment if coverage changes
+
+  # Comment layout
+  layout: "reach,diff,flags,tree"
+
+  # Show these behaviors
+  behavior: default
+
+# EXPLANATION: Ignore certain files from coverage calculation
+ignore:
+  - "**/*_test.go"           # Test files
+  - "**/cmd/**"              # Main entry points (hard to test)
+  - "**/vendor/**"           # Third-party code
+  - "**/*.pb.go"             # Generated protobuf files (if any)
+
+# EXPLANATION: Flag configurations for different services
+flags:
+  country-service:
+    paths:
+      - services/country-service/
+    carryforward: true  # Use previous coverage if this service doesn't change
+
+  technology-service:
+    paths:
+      - services/technology-service/
+    carryforward: true
+
+  api-gateway:
+    paths:
+      - services/api-gateway/
+    carryforward: true
