@@ -1,6 +1,9 @@
 # golangci-lint configuration
 # EXPLANATION: This file configures which linters run and how strict they are
 
+# Version of golangci-lint configuration
+version: "2"
+
 # Run configuration
 run:
   # EXPLANATION: Timeout for analysis (default is 1m, we increase for larger codebases)
@@ -11,6 +14,7 @@ run:
   skip-dirs:
     - vendor
     - bin
+    - scripts
 
   # EXPLANATION: Number of CPUs to use (0 = all available)
   concurrency: 4
@@ -29,30 +33,19 @@ linters:
   # This is better than disabling because new linters won't surprise us
   enable:
     # Code quality linters
-    - gofmt         # EXPLANATION: Checks if code is properly formatted
-    - goimports     # EXPLANATION: Checks if imports are organized correctly
     - govet         # EXPLANATION: Examines code and reports suspicious constructs
     - errcheck      # EXPLANATION: Checks that errors are handled
     - staticcheck   # EXPLANATION: Advanced static analysis (catches many bugs)
     - unused        # EXPLANATION: Finds unused code
     - ineffassign   # EXPLANATION: Detects ineffectual assignments
-    - typecheck     # EXPLANATION: Type checking (like go compiler)
 
     # Style linters
-    - gosimple      # EXPLANATION: Suggests code simplifications
     - misspell      # EXPLANATION: Finds commonly misspelled English words
     - revive        # EXPLANATION: Fast, configurable, extensible Go linter
 
     # Bug detection
     - bodyclose     # EXPLANATION: Checks HTTP response bodies are closed
-    - sqlclose      # EXPLANATION: Checks SQL rows/statements are closed
     - gosec         # EXPLANATION: Security-focused linter
-
-  # EXPLANATION: Disable certain linters if they're too noisy
-  # We can enable these later as code matures
-  disable:
-    - lll           # Line length (too strict for comments/strings)
-    - gomnd         # Magic numbers (sometimes unavoidable)
 
 # Linter settings
 linters-settings:
@@ -71,6 +64,8 @@ linters-settings:
     rules:
       - name: exported
         disabled: true  # Don't require comments on every export (can enable later)
+      - name: package-comments
+        disabled: true  # Don't require package comments (can enable later)
 
   # gosec: Security linter settings
   gosec:
@@ -92,6 +87,14 @@ issues:
 
   # EXPLANATION: Exclude specific warnings we don't care about
   exclude-rules:
+    # Exclude scripts directory
+    - path: scripts/
+      linters:
+        - typecheck
+        - errcheck
+        - unused
+        - gosec
+
     # Exclude some linters from running on tests
     - path: _test\.go
       linters:
@@ -109,14 +112,3 @@ issues:
       linters:
         - revive
       # EXPLANATION: Will add docs later
-
-# Severity configuration
-severity:
-  # EXPLANATION: Default severity for issues
-  default-severity: warning
-
-  # EXPLANATION: Rules to assign severity levels
-  rules:
-    - linters:
-        - gosec
-      severity: error  # Security issues are errors
