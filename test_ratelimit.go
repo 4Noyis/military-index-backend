@@ -16,7 +16,7 @@ func main() {
 	fmt.Println("Rate Limiter Burst Test")
 	fmt.Println("Sending", numRequests, "simultaneous requests")
 	fmt.Println("Expected limit: 3 requests/minute")
-	fmt.Println("========================================\n")
+	fmt.Println("========================================")
 
 	var wg sync.WaitGroup
 	results := make(chan string, numRequests)
