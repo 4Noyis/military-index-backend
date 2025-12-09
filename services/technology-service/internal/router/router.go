@@ -8,14 +8,22 @@ import (
 )
 
 // SetupRoutes configures all routes for the technology service
-func SetupRoutes(h *handler.TechnologyHandler) http.Handler {
+func SetupRoutes(techHandler *handler.TechnologyHandler, categoryHandler *handler.CategoryHandler) http.Handler {
 	mux := http.NewServeMux()
 
 	// Apply middleware
 	var handler http.Handler = mux
 
+	// Category routes
+	// GET /api/v1/categories - List all categories
+	mux.HandleFunc("GET /api/v1/categories", categoryHandler.GetAll)
+
+	// GET /api/v1/categories/{id} - Get single category
+	mux.HandleFunc("GET /api/v1/categories/", categoryHandler.GetByID)
+
+	// Technology routes
 	// GET /api/v1/technologies - List all technologies (with optional search ?q=)
-	mux.HandleFunc("GET /api/v1/technologies", h.GetAll)
+	mux.HandleFunc("GET /api/v1/technologies", techHandler.GetAll)
 
 	// GET /api/v1/technologies/{id} - Get single technology
 	mux.HandleFunc("GET /api/v1/technologies/", func(w http.ResponseWriter, r *http.Request) {
@@ -26,43 +34,43 @@ func SetupRoutes(h *handler.TechnologyHandler) http.Handler {
 
 			// Check for special routes
 			if len(segment) > 8 && segment[:8] == "country/" {
-				h.GetByCountry(w, r)
+				techHandler.GetByCountry(w, r)
 				return
 			}
 			if len(segment) > 9 && segment[:9] == "category/" {
-				h.GetByCategory(w, r)
+				techHandler.GetByCategory(w, r)
 				return
 			}
 			if len(segment) > 7 && segment[:7] == "status/" {
-				h.GetByStatus(w, r)
+				techHandler.GetByStatus(w, r)
 				return
 			}
 
 			// Otherwise, treat as ID
-			h.GetByID(w, r)
+			techHandler.GetByID(w, r)
 		}
 	})
 
 	// GET /api/v1/technologies/country/{code} - Get by country
-	mux.HandleFunc("GET /api/v1/technologies/country/", h.GetByCountry)
+	mux.HandleFunc("GET /api/v1/technologies/country/", techHandler.GetByCountry)
 
 	// GET /api/v1/technologies/category/{name} - Get by category
-	mux.HandleFunc("GET /api/v1/technologies/category/", h.GetByCategory)
+	mux.HandleFunc("GET /api/v1/technologies/category/", techHandler.GetByCategory)
 
 	// GET /api/v1/technologies/status/{status} - Get by status
-	mux.HandleFunc("GET /api/v1/technologies/status/", h.GetByStatus)
+	mux.HandleFunc("GET /api/v1/technologies/status/", techHandler.GetByStatus)
 
 	// GET /api/v1/technologies/year-range?start=2000&end=2020 - Get by year range
-	mux.HandleFunc("GET /api/v1/technologies/year-range", h.GetByYearRange)
+	mux.HandleFunc("GET /api/v1/technologies/year-range", techHandler.GetByYearRange)
 
 	// POST /api/v1/technologies - Create technology
-	mux.HandleFunc("POST /api/v1/technologies", h.Create)
+	mux.HandleFunc("POST /api/v1/technologies", techHandler.Create)
 
 	// PUT /api/v1/technologies/{id} - Update technology
-	mux.HandleFunc("PUT /api/v1/technologies/", h.Update)
+	mux.HandleFunc("PUT /api/v1/technologies/", techHandler.Update)
 
 	// DELETE /api/v1/technologies/{id} - Delete technology
-	mux.HandleFunc("DELETE /api/v1/technologies/", h.Delete)
+	mux.HandleFunc("DELETE /api/v1/technologies/", techHandler.Delete)
 
 	// Apply middleware (CORS, Logger, Error Handler)
 	handler = middleware.CORS(handler)

@@ -30,8 +30,12 @@ func main() {
 	technologyService := service.NewTechnologyService(technologyRepo)
 	technologyHandler := handler.NewTechnologyHandler(technologyService)
 
+	categoryRepo := repository.NewCategoryRepository(db)
+	categoryService := service.NewCategoryService(categoryRepo)
+	categoryHandler := handler.NewCategoryHandler(categoryService)
+
 	// Setup router
-	r := router.SetupRoutes(technologyHandler)
+	r := router.SetupRoutes(technologyHandler, categoryHandler)
 
 	// Get port from environment or use default
 	port := os.Getenv("TECHNOLOGY_SERVICE_PORT")
