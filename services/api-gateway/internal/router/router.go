@@ -58,6 +58,17 @@ func (g *Gateway) SetupRoutes() http.Handler {
 		g.technologyProxy.ServeHTTP(w, r)
 	})
 
+	// Route categories to Technology Service
+	// All /api/v1/categories routes (with or without trailing slash) go to technology-service
+	mux.HandleFunc("/api/v1/categories", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Routing %s %s to technology-service", r.Method, r.URL.Path)
+		g.technologyProxy.ServeHTTP(w, r)
+	})
+	mux.HandleFunc("/api/v1/categories/", func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("Routing %s %s to technology-service", r.Method, r.URL.Path)
+		g.technologyProxy.ServeHTTP(w, r)
+	})
+
 	// Route to Country Service
 	// All /api/v1/countries routes (with or without trailing slash) go to country-service
 	mux.HandleFunc("/api/v1/countries", func(w http.ResponseWriter, r *http.Request) {
@@ -104,6 +115,7 @@ func (g *Gateway) rootHandler(w http.ResponseWriter, r *http.Request) {
 		"endpoints": map[string]string{
 			"health":       "/health",
 			"technologies": "/api/v1/technologies",
+			"categories":   "/api/v1/categories",
 			"countries":    "/api/v1/countries",
 		},
 	})
