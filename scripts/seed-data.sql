@@ -1,28 +1,28 @@
 -- Insert technology categories
 INSERT INTO tech_categories (name, description, icon_url) VALUES
-('Aircraft', 'Military aircraft including fighters, bombers, and transport', '/icons/aircraft.svg'),
-('Naval', 'Naval vessels and submarine technology', '/icons/naval.svg'),
-('Ground Vehicles', 'Tanks, armored vehicles, and artillery', '/icons/ground.svg'),
-('Missiles', 'Missile systems and rockets', '/icons/missiles.svg'),
-('Electronics', 'Radar, communication, and electronic warfare', '/icons/electronics.svg'),
-('Drones', 'Unmanned aerial vehicles and systems', '/icons/drones.svg'),
-('Space & Satellite', 'Space-based military technology', '/icons/space.svg')
+('Aircraft', 'Military aircraft including fighters, bombers, and transport', 'https://api.iconify.design/mdi/airplane.svg'),
+('Naval', 'Naval vessels and submarine technology', 'https://api.iconify.design/mdi/ferry.svg'),
+('Ground Vehicles', 'Tanks, armored vehicles, and artillery', 'https://api.iconify.design/mdi/tank.svg'),
+('Missiles', 'Missile systems and rockets', 'https://api.iconify.design/mdi/rocket-launch.svg'),
+('Electronics', 'Radar, communication, and electronic warfare', 'https://api.iconify.design/mdi/radar.svg'),
+('Drones', 'Unmanned aerial vehicles and systems', 'https://api.iconify.design/mdi/quadcopter.svg'),
+('Space & Satellite', 'Space-based military technology', 'https://api.iconify.design/mdi/satellite-variant.svg')
 ON CONFLICT (name) DO NOTHING;
 
 -- Insert countries
 INSERT INTO countries (name, code, flag_url) VALUES
-('Turkey', 'TUR', '/flags/turkey.svg'),
-('United States', 'USA', '/flags/usa.svg'),
-('Russia', 'RUS', '/flags/russia.svg'),
-('China', 'CHN', '/flags/china.svg'),
-('Germany', 'DEU', '/flags/germany.svg'),
-('United Kingdom', 'GBR', '/flags/uk.svg'),
-('France', 'FRA', '/flags/france.svg'),
-('Israel', 'ISR', '/flags/israel.svg'),
-('India', 'IND', '/flags/india.svg'),
-('Japan', 'JPN', '/flags/japan.svg'),
-('South Korea', 'KOR', '/flags/korea.svg'),
-('Italy', 'ITA', '/flags/italy.svg')
+('Turkey', 'TUR', 'https://flagcdn.com/w320/tr.png'),
+('United States', 'USA', 'https://flagcdn.com/w320/us.png'),
+('Russia', 'RUS', 'https://flagcdn.com/w320/ru.png'),
+('China', 'CHN', 'https://flagcdn.com/w320/cn.png'),
+('Germany', 'DEU', 'https://flagcdn.com/w320/de.png'),
+('United Kingdom', 'GBR', 'https://flagcdn.com/w320/gb.png'),
+('France', 'FRA', 'https://flagcdn.com/w320/fr.png'),
+('Israel', 'ISR', 'https://flagcdn.com/w320/il.png'),
+('India', 'IND', 'https://flagcdn.com/w320/in.png'),
+('Japan', 'JPN', 'https://flagcdn.com/w320/jp.png'),
+('South Korea', 'KOR', 'https://flagcdn.com/w320/kr.png'),
+('Italy', 'ITA', 'https://flagcdn.com/w320/it.png')
 ON CONFLICT (code) DO NOTHING;
 
 
