@@ -72,6 +72,13 @@ func SetupRoutes(techHandler *handler.TechnologyHandler, categoryHandler *handle
 	// DELETE /api/v1/technologies/{id} - Delete technology
 	mux.HandleFunc("DELETE /api/v1/technologies/", techHandler.Delete)
 
+	// Health check endpoint
+	mux.HandleFunc("GET /health", func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"status":"ok","service":"technology-service"}`))
+	})
+
 	// Apply middleware (CORS, Logger, Error Handler)
 	handler = middleware.CORS(handler)
 	handler = middleware.Logger(handler)
