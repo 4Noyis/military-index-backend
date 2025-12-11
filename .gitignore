@@ -1,5 +1,6 @@
 # Environment variables
 .env
+services/**/.env
 
 # Database data
 postgres_data/
@@ -15,6 +16,11 @@ pgadmin_data/
 *.out
 vendor/
 go.work
+
+# Test coverage
+coverage.out
+coverage.txt
+coverage.html
 
 # IDEs
 .vscode/

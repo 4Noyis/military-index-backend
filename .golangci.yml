@@ -1,0 +1,114 @@
+# golangci-lint configuration
+# EXPLANATION: This file configures which linters run and how strict they are
+
+# Version of golangci-lint configuration
+version: "2"
+
+# Run configuration
+run:
+  # EXPLANATION: Timeout for analysis (default is 1m, we increase for larger codebases)
+  timeout: 5m
+
+  # EXPLANATION: Which directories to analyze
+  # We skip vendor (third-party code) and generated files
+  skip-dirs:
+    - vendor
+    - bin
+    - scripts
+
+  # EXPLANATION: Number of CPUs to use (0 = all available)
+  concurrency: 4
+
+# Output configuration
+output:
+  # EXPLANATION: Format of output (colored-line-number is most readable)
+  format: colored-line-number
+
+  # EXPLANATION: Print linter name in output (helps identify which rule failed)
+  print-linter-name: true
+
+# Linters to enable
+linters:
+  # EXPLANATION: We explicitly enable linters we want
+  # This is better than disabling because new linters won't surprise us
+  enable:
+    # Code quality linters
+    - govet         # EXPLANATION: Examines code and reports suspicious constructs
+    - errcheck      # EXPLANATION: Checks that errors are handled
+    - staticcheck   # EXPLANATION: Advanced static analysis (catches many bugs)
+    - unused        # EXPLANATION: Finds unused code
+    - ineffassign   # EXPLANATION: Detects ineffectual assignments
+
+    # Style linters
+    - misspell      # EXPLANATION: Finds commonly misspelled English words
+    - revive        # EXPLANATION: Fast, configurable, extensible Go linter
+
+    # Bug detection
+    - bodyclose     # EXPLANATION: Checks HTTP response bodies are closed
+    - gosec         # EXPLANATION: Security-focused linter
+
+# Linter settings
+linters-settings:
+  # EXPLANATION: Configuration for specific linters
+
+  # errcheck: Don't fail on errors from these functions
+  errcheck:
+    exclude-functions:
+      - (io.Closer).Close              # Defer close is idiomatic
+      - (*database/sql.Rows).Close     # Often deferred
+      - (*database/sql.DB).Close       # Often in cleanup
+
+  # revive: Style rules
+  revive:
+    confidence: 0.8  # Confidence threshold (0.8 = high confidence only)
+    rules:
+      - name: exported
+        disabled: true  # Don't require comments on every export (can enable later)
+      - name: package-comments
+        disabled: true  # Don't require package comments (can enable later)
+
+  # gosec: Security linter settings
+  gosec:
+    excludes:
+      - G104  # Audit errors not checked (covered by errcheck)
+
+  # goimports: Organize imports
+  goimports:
+    local-prefixes: github.com/berenalp/military-index-backend
+
+# Issues configuration
+issues:
+  # EXPLANATION: Don't hide multiple occurrences of same issue
+  max-same-issues: 0
+
+  # EXPLANATION: Don't exclude issues in test files
+  # Tests should also follow good practices
+  exclude-use-default: false
+
+  # EXPLANATION: Exclude specific warnings we don't care about
+  exclude-rules:
+    # Exclude scripts directory
+    - path: scripts/
+      linters:
+        - typecheck
+        - errcheck
+        - unused
+        - gosec
+
+    # Exclude some linters from running on tests
+    - path: _test\.go
+      linters:
+        - gosec      # Security checks less important in tests
+        - errcheck   # Test cleanup errors often ignored
+
+    # Exclude specific warnings by text
+    - text: "weak cryptographic primitive"
+      linters:
+        - gosec
+      # EXPLANATION: We might use MD5 for checksums, not crypto
+
+    # Allow TODO comments
+    - text: "comment on exported"
+      linters:
+        - revive
+      # EXPLANATION: Will add docs later

@@ -38,9 +38,6 @@ WORKDIR /root/
 # Copy the binary from builder
 COPY --from=builder /app/services/country-service/main .
 
-# Copy .env file (optional, for local dev)
-COPY .env .env
-
 # Expose port
 EXPOSE 8082
 

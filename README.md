@@ -2,6 +2,10 @@
 
 Military technology database and API service built with Go microservices.
 
+![CI Pipeline](https://github.com/4noyis/military-index-backend/workflows/CI%20Pipeline/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/4noyis/military-index-backend)](https://goreportcard.com/report/github.com/4noyis/military-index-backend)
+[![codecov](https://codecov.io/gh/4noyis/military-index-backend/branch/main/graph/badge.svg)](https://codecov.io/gh/4noyis/military-index-backend)
+
 ##  Quick Start
 
 ### Prerequisites
@@ -51,6 +55,7 @@ Military technology database and API service built with Go microservices.
 
 ### Operations
 - [Deployment Guide](docs/DEPLOYMENT.md) - Production deployment options
+- [CI/CD Guide](docs/CI.md) - Continuous Integration setup and usage
 - [FAQ](docs/FAQ.md) - Frequently asked questions
 
 ### Development
