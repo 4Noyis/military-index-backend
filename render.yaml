@@ -1,0 +1,69 @@
+services:
+  # Technology Service - Handles technologies and categories
+  - type: web
+    name: military-index-technology-service
+    runtime: docker
+    dockerfilePath: ./services/technology-service/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: TECHNOLOGY_SERVICE_PORT
+        value: 8081
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 5432
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: postgres
+      - key: DB_SSLMODE
+        value: require
+    healthCheckPath: /health
+
+  # Country Service - Handles countries
+  - type: web
+    name: military-index-country-service
+    runtime: docker
+    dockerfilePath: ./services/country-service/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: COUNTRY_SERVICE_PORT
+        value: 8082
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 5432
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: postgres
+      - key: DB_SSLMODE
+        value: require
+    healthCheckPath: /health
+
+  # API Gateway - Main entry point, routes to other services
+  - type: web
+    name: military-index-api-gateway
+    runtime: docker
+    dockerfilePath: ./services/api-gateway/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: API_GATEWAY_PORT
+        value: 8080
+      - key: TECHNOLOGY_SERVICE_URL
+        fromService:
+          name: military-index-technology-service
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: COUNTRY_SERVICE_URL
+        fromService:
+          name: military-index-country-service
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: RATE_LIMIT_REQUESTS_PER_MINUTE
+        value: 60
+    healthCheckPath: /health

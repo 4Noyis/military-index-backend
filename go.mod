@@ -2,7 +2,10 @@ module github.com/4Noyis/military-index-backend
 
 go 1.23.2
 
-require github.com/joho/godotenv v1.5.1
+require (
+	github.com/4Noyis/military-index-backend/shared v0.0.0-20251203225804-17a2a169d62e
+	github.com/joho/godotenv v1.5.1 // indirect
+)
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
