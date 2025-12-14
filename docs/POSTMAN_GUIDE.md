@@ -57,7 +57,11 @@ The collection is organized into logical folders:
 - **Update Technology**: Modify existing technology (Admin)
 - **Delete Technology**: Remove technology (Admin)
 
-### 4. Examples - Common Workflows
+### 4. Categories
+- **Get All Categories**: List all technology categories
+- **Get Category by ID**: Single category by ID
+
+### 5. Examples - Common Workflows
 Pre-configured requests for common use cases:
 - Get Turkish Drones
 - Get Recent Technologies (2020-2025)

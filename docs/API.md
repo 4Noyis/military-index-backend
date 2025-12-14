@@ -17,6 +17,7 @@
   - [Health Check](#health-check)
   - [Countries API](#countries-api)
   - [Technologies API](#technologies-api)
+  - [Categories API](#categories-api)
 
 ---
 
@@ -1155,6 +1156,120 @@ curl -X DELETE http://localhost:8080/api/v1/technologies/7
 
 ---
 
+## Categories API
+
+### List All Categories
+
+#### GET /api/v1/categories
+
+Retrieve all military technology categories.
+
+**Request:**
+```bash
+curl http://localhost:8080/api/v1/categories
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Aircraft",
+      "description": "Military aircraft including fighters, bombers, and transport",
+      "icon_url": "https://api.iconify.design/mdi/airplane.svg",
+      "created_at": "2025-11-18T12:51:49.149239Z"
+    },
+    {
+      "id": 2,
+      "name": "Naval",
+      "description": "Naval vessels and submarine technology",
+      "icon_url": "https://api.iconify.design/mdi/ferry.svg",
+      "created_at": "2025-11-18T12:51:49.149239Z"
+    },
+    {
+      "id": 3,
+      "name": "Ground Vehicles",
+      "description": "Tanks, armored vehicles, and artillery",
+      "icon_url": "https://api.iconify.design/mdi/tank.svg",
+      "created_at": "2025-11-18T12:51:49.149239Z"
+    },
+    {
+      "id": 4,
+      "name": "Missiles",
+      "description": "Missile systems and rockets",
+      "icon_url": "https://api.iconify.design/mdi/rocket-launch.svg",
+      "created_at": "2025-11-18T12:51:49.149239Z"
+    },
+    {
+      "id": 5,
+      "name": "Electronics",
+      "description": "Radar, communication, and electronic warfare",
+      "icon_url": "https://api.iconify.design/mdi/radar.svg",
+      "created_at": "2025-11-18T12:51:49.149239Z"
+    },
+    {
+      "id": 6,
+      "name": "Drones",
+      "description": "Unmanned aerial vehicles and systems",
+      "icon_url": "https://api.iconify.design/mdi/quadcopter.svg",
+      "created_at": "2025-11-18T12:51:49.149239Z"
+    },
+    {
+      "id": 7,
+      "name": "Space & Satellite",
+      "description": "Space-based military technology",
+      "icon_url": "https://api.iconify.design/mdi/satellite-variant.svg",
+      "created_at": "2025-11-18T12:51:49.149239Z"
+    }
+  ]
+}
+```
+
+---
+
+### Get Category by ID
+
+#### GET /api/v1/categories/{id}
+
+Retrieve a single category by its ID.
+
+**Path Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | integer | Category ID |
+
+**Request:**
+```bash
+curl http://localhost:8080/api/v1/categories/1
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "Aircraft",
+    "description": "Military aircraft including fighters, bombers, and transport",
+    "icon_url": "https://api.iconify.design/mdi/airplane.svg",
+    "created_at": "2025-11-18T12:51:49.149239Z"
+  }
+}
+```
+
+**Error Response:** `404 Not Found`
+```json
+{
+  "success": false,
+  "error": "Category not found"
+}
+```
+
+---
+
 ## Data Models
 
 ### Country Model
@@ -1251,19 +1366,22 @@ curl http://localhost:8080/health
 # 2. Get all countries
 curl "http://localhost:8080/api/v1/countries"
 
-# 3. Find Turkey's technologies
+# 3. Get all categories
+curl "http://localhost:8080/api/v1/categories"
+
+# 4. Find Turkey's technologies
 curl "http://localhost:8080/api/v1/technologies/country/TUR"
 
-# 4. Get all drones
+# 5. Get all drones
 curl "http://localhost:8080/api/v1/technologies/category/Drones"
 
-# 5. Search for specific technology
+# 6. Search for specific technology
 curl "http://localhost:8080/api/v1/technologies?q=KAAN"
 
-# 6. Get technologies from 2020-2024
+# 7. Get technologies from 2020-2024
 curl "http://localhost:8080/api/v1/technologies/year-range?start=2020&end=2024"
 
-# 7. Get current operational technologies
+# 8. Get current operational technologies
 curl "http://localhost:8080/api/v1/technologies/status/current"
 ```
 
