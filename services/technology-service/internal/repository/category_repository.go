@@ -13,6 +13,9 @@ type CategoryRepository interface {
 	GetAll(ctx context.Context) ([]models.Category, error)
 	GetByID(ctx context.Context, id uint) (*models.Category, error)
 	GetByName(ctx context.Context, name string) (*models.Category, error)
+	Create(ctx context.Context, category *models.Category) error
+	Update(ctx context.Context, category *models.Category) error
+	Delete(ctx context.Context, id uint) error
 }
 
 // categoryRepository implements CategoryRepository
@@ -62,4 +65,34 @@ func (r *categoryRepository) GetByName(ctx context.Context, name string) (*model
 	}
 
 	return &category, nil
+}
+
+// Create creates a new category
+func (r *categoryRepository) Create(ctx context.Context, category *models.Category) error {
+	if err := r.db.WithContext(ctx).Create(category).Error; err != nil {
+		return fmt.Errorf("failed to create category: %w", err)
+	}
+	return nil
+}
+
+// Update updates an existing category
+func (r *categoryRepository) Update(ctx context.Context, category *models.Category) error {
+	if err := r.db.WithContext(ctx).Save(category).Error; err != nil {
+		return fmt.Errorf("failed to update category: %w", err)
+	}
+	return nil
+}
+
+// Delete deletes a category by id
+func (r *categoryRepository) Delete(ctx context.Context, id uint) error {
+	result := r.db.WithContext(ctx).Delete(&models.Category{}, id)
+	if result.Error != nil {
+		return fmt.Errorf("failed to delete category: %w", result.Error)
+	}
+
+	if result.RowsAffected == 0 {
+		return fmt.Errorf("category not found")
+	}
+
+	return nil
 }

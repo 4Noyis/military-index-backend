@@ -8,7 +8,8 @@ type Category struct {
 	Name        string    `gorm:"type:varchar(100);not null;unique" json:"name" binding:"required"`
 	Description string    `gorm:"type:text" json:"description"`
 	IconURL     string    `gorm:"type:varchar(255)" json:"icon_url"`
-	CreatedAt   time.Time `gorm:"type:autoCreateTime" json:"created_at"`
+	CreatedAt   time.Time `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt   time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 }
 
 // TableName specifies the table name for the Category Model

@@ -7,6 +7,7 @@ replace github.com/4Noyis/military-index-backend/shared => ../../shared
 require (
 	github.com/4Noyis/military-index-backend/shared v0.0.0-00010101000000-000000000000
 	github.com/stretchr/testify v1.8.1
+	golang.org/x/text v0.21.0
 	gorm.io/driver/sqlite v1.6.0
 	gorm.io/gorm v1.31.1
 )
@@ -27,7 +28,6 @@ require (
 	github.com/stretchr/objx v0.5.0 // indirect
 	golang.org/x/crypto v0.31.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/postgres v1.6.0 // indirect
 )

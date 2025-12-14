@@ -21,6 +21,15 @@ func SetupRoutes(techHandler *handler.TechnologyHandler, categoryHandler *handle
 	// GET /api/v1/categories/{id} - Get single category
 	mux.HandleFunc("GET /api/v1/categories/", categoryHandler.GetByID)
 
+	// POST /api/v1/categories - Create new category
+	mux.HandleFunc("POST /api/v1/categories", categoryHandler.Create)
+
+	// PUT /api/v1/categories/{id} - Update a category
+	mux.HandleFunc("PUT /api/v1/categories/", categoryHandler.Update)
+
+	// DELETE /api/v1/categories/{id} - Delete a cetegory
+	mux.HandleFunc("DELETE /api/v1/categories/", categoryHandler.Delete)
+
 	// Technology routes
 	// GET /api/v1/technologies - List all technologies (with optional search ?q=)
 	mux.HandleFunc("GET /api/v1/technologies", techHandler.GetAll)
