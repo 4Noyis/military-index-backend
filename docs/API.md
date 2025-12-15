@@ -1270,6 +1270,157 @@ curl http://localhost:8080/api/v1/categories/1
 
 ---
 
+### Create Category
+
+#### POST /api/v1/categories
+
+Create a new technology category.
+
+**Request Body:**
+```json
+{
+  "name": "Cyber Warfare",
+  "description": "Cyber security and offensive cyber capabilities",
+  "icon_url": "https://api.iconify.design/mdi/shield-lock.svg"
+}
+```
+
+**Request:**
+```bash
+curl -X POST http://localhost:8080/api/v1/categories \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Cyber Warfare",
+    "description": "Cyber security and offensive cyber capabilities",
+    "icon_url": "https://api.iconify.design/mdi/shield-lock.svg"
+  }'
+```
+
+**Response:** `201 Created`
+```json
+{
+  "success": true,
+  "data": {
+    "id": 8,
+    "name": "Cyber Warfare",
+    "description": "Cyber security and offensive cyber capabilities",
+    "icon_url": "https://api.iconify.design/mdi/shield-lock.svg",
+    "created_at": "2025-12-14T20:30:00Z",
+    "updated_at": "2025-12-14T20:30:00Z"
+  },
+  "message": "Category created successfully"
+}
+```
+
+**Error Response:** `400 Bad Request`
+```json
+{
+  "success": false,
+  "error": {
+    "code": "BAD_REQUEST",
+    "message": "Failed to create category",
+    "details": "category name is required"
+  }
+}
+```
+
+---
+
+### Update Category
+
+#### PUT /api/v1/categories/{id}
+
+Update an existing category.
+
+**Path Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | integer | Category ID |
+
+**Request Body:**
+```json
+{
+  "name": "Cyber Warfare",
+  "description": "Cyber security, offensive and defensive cyber capabilities",
+  "icon_url": "https://api.iconify.design/mdi/shield-lock.svg"
+}
+```
+
+**Request:**
+```bash
+curl -X PUT http://localhost:8080/api/v1/categories/8 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Cyber Warfare",
+    "description": "Cyber security, offensive and defensive cyber capabilities",
+    "icon_url": "https://api.iconify.design/mdi/shield-lock.svg"
+  }'
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "id": 8,
+    "name": "Cyber Warfare",
+    "description": "Cyber security, offensive and defensive cyber capabilities",
+    "icon_url": "https://api.iconify.design/mdi/shield-lock.svg",
+    "created_at": "2025-12-14T20:30:00Z",
+    "updated_at": "2025-12-14T20:35:00Z"
+  },
+  "message": "Category updated successfully"
+}
+```
+
+**Error Response:** `404 Not Found`
+```json
+{
+  "success": false,
+  "error": {
+    "code": "NOT_FOUND",
+    "message": "Category not found"
+  }
+}
+```
+
+---
+
+### Delete Category
+
+#### DELETE /api/v1/categories/{id}
+
+Delete a category by ID.
+
+**Path Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | integer | Category ID |
+
+**Request:**
+```bash
+curl -X DELETE http://localhost:8080/api/v1/categories/8
+```
+
+**Response:** `204 No Content`
+
+**Error Response:** `404 Not Found`
+```json
+{
+  "success": false,
+  "error": {
+    "code": "NOT_FOUND",
+    "message": "Category not found"
+  }
+}
+```
+
+**Note:** Categories that are referenced by technologies cannot be deleted due to foreign key constraints.
+
+---
+
 ## Data Models
 
 ### Country Model
@@ -1321,6 +1472,7 @@ curl http://localhost:8080/api/v1/categories/1
   description: string;           // Category description
   icon_url: string;              // Icon image URL
   created_at: string;            // ISO 8601 timestamp
+  updated_at: string;            // ISO 8601 timestamp
 }
 ```
 

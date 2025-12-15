@@ -452,6 +452,66 @@
             "description": "Retrieve a single category by its ID"
           },
           "response": []
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cyber Warfare\",\n  \"description\": \"Cyber security and offensive cyber capabilities\",\n  \"icon_url\": \"https://api.iconify.design/mdi/shield-lock.svg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/categories",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "categories"]
+            },
+            "description": "Create a new category"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cyber Warfare\",\n  \"description\": \"Cyber security, offensive and defensive cyber capabilities\",\n  \"icon_url\": \"https://api.iconify.design/mdi/shield-lock.svg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/categories/8",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "categories", "8"]
+            },
+            "description": "Update an existing category"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/categories/8",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "categories", "8"]
+            },
+            "description": "Delete a category"
+          },
+          "response": []
         }
       ]
     },
