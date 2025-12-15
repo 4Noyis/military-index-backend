@@ -109,10 +109,16 @@ func (s *categoryService) Update(ctx context.Context, id uint, category *models.
 		return err
 	}
 
-	// Update fields
+	// Update fields - only update if provided (non-empty)
 	existing.Name = cases.Title(language.English).String(strings.ToLower(strings.TrimSpace(category.Name)))
-	existing.Description = strings.TrimSpace(category.Description)
-	existing.IconURL = strings.TrimSpace(category.IconURL)
+
+	// Only update optional fields if they are provided
+	if category.Description != "" {
+		existing.Description = strings.TrimSpace(category.Description)
+	}
+	if category.IconURL != "" {
+		existing.IconURL = strings.TrimSpace(category.IconURL)
+	}
 
 	// Validate updated fields
 	if err := s.repo.Update(ctx, existing); err != nil {

@@ -60,6 +60,9 @@ The collection is organized into logical folders:
 ### 4. Categories
 - **Get All Categories**: List all technology categories
 - **Get Category by ID**: Single category by ID
+- **Create Category**: Create a new category
+- **Update Category**: Update an existing category
+- **Delete Category**: Delete a category
 
 ### 5. Examples - Common Workflows
 Pre-configured requests for common use cases:
