@@ -20,6 +20,7 @@ type Technology struct {
 	Height        *int      `gorm:"type:integer" json:"height"`
 	Status        string    `gorm:"type:varchar(50)" json:"status"`
 	ImageURL      string    `gorm:"type:varchar(255)" json:"image_url"`
+	ModelURL      string    `gorm:"type:varchar(255)" json:"model_url"`
 	CreatedAt     time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt     time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 
