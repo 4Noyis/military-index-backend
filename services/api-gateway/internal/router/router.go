@@ -7,8 +7,10 @@ import (
 	"os"
 	"strings"
 
+	"github.com/4Noyis/military-index-backend/services/api-gateway/internal/handler"
 	"github.com/4Noyis/military-index-backend/services/api-gateway/internal/middleware"
 	"github.com/4Noyis/military-index-backend/services/api-gateway/internal/proxy"
+	sharedMiddleware "github.com/4Noyis/military-index-backend/shared/middleware"
 )
 
 // Gateway represents the API Gateway
@@ -47,37 +49,79 @@ func NewGateway() (*Gateway, error) {
 func (g *Gateway) SetupRoutes() http.Handler {
 	mux := http.NewServeMux()
 
+	// Auth handler
+	authHandler := handler.NewAuthHandler()
+
+	// Authentication routes (public - no JWT required)
+	mux.HandleFunc("/api/v1/auth/login", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPost {
+			authHandler.Login(w, r)
+		} else {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+	})
+
 	// Route to Technology Service
 	// All /api/v1/technologies routes (with or without trailing slash) go to technology-service
 	mux.HandleFunc("/api/v1/technologies", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Routing %s %s to technology-service", r.Method, r.URL.Path)
-		g.technologyProxy.ServeHTTP(w, r)
+		// Apply JWT auth for write operations
+		if isWriteOperation(r.Method) {
+			sharedMiddleware.JWTAuth(g.technologyProxy).ServeHTTP(w, r)
+		} else {
+			g.technologyProxy.ServeHTTP(w, r)
+		}
 	})
 	mux.HandleFunc("/api/v1/technologies/", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Routing %s %s to technology-service", r.Method, r.URL.Path)
-		g.technologyProxy.ServeHTTP(w, r)
+		// Apply JWT auth for write operations
+		if isWriteOperation(r.Method) {
+			sharedMiddleware.JWTAuth(g.technologyProxy).ServeHTTP(w, r)
+		} else {
+			g.technologyProxy.ServeHTTP(w, r)
+		}
 	})
 
 	// Route categories to Technology Service
 	// All /api/v1/categories routes (with or without trailing slash) go to technology-service
 	mux.HandleFunc("/api/v1/categories", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Routing %s %s to technology-service", r.Method, r.URL.Path)
-		g.technologyProxy.ServeHTTP(w, r)
+		// Apply JWT auth for write operations
+		if isWriteOperation(r.Method) {
+			sharedMiddleware.JWTAuth(g.technologyProxy).ServeHTTP(w, r)
+		} else {
+			g.technologyProxy.ServeHTTP(w, r)
+		}
 	})
 	mux.HandleFunc("/api/v1/categories/", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Routing %s %s to technology-service", r.Method, r.URL.Path)
-		g.technologyProxy.ServeHTTP(w, r)
+		// Apply JWT auth for write operations
+		if isWriteOperation(r.Method) {
+			sharedMiddleware.JWTAuth(g.technologyProxy).ServeHTTP(w, r)
+		} else {
+			g.technologyProxy.ServeHTTP(w, r)
+		}
 	})
 
 	// Route to Country Service
 	// All /api/v1/countries routes (with or without trailing slash) go to country-service
 	mux.HandleFunc("/api/v1/countries", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Routing %s %s to country-service", r.Method, r.URL.Path)
-		g.countryProxy.ServeHTTP(w, r)
+		// Apply JWT auth for write operations
+		if isWriteOperation(r.Method) {
+			sharedMiddleware.JWTAuth(g.countryProxy).ServeHTTP(w, r)
+		} else {
+			g.countryProxy.ServeHTTP(w, r)
+		}
 	})
 	mux.HandleFunc("/api/v1/countries/", func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Routing %s %s to country-service", r.Method, r.URL.Path)
-		g.countryProxy.ServeHTTP(w, r)
+		// Apply JWT auth for write operations
+		if isWriteOperation(r.Method) {
+			sharedMiddleware.JWTAuth(g.countryProxy).ServeHTTP(w, r)
+		} else {
+			g.countryProxy.ServeHTTP(w, r)
+		}
 	})
 
 	// Health check endpoint
@@ -155,4 +199,9 @@ func getEnv(key, defaultValue string) string {
 		return value
 	}
 	return defaultValue
+}
+
+// isWriteOperation checks if the HTTP method is a write operation
+func isWriteOperation(method string) bool {
+	return method == http.MethodPost || method == http.MethodPut || method == http.MethodDelete
 }
