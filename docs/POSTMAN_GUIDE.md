@@ -29,6 +29,39 @@ To change the environment:
    - Value: `http://localhost:8080` (or your API URL)
 5. Save and activate the environment
 
+### 3. Authentication Setup
+
+The API requires JWT authentication for write operations (POST, PUT, DELETE).
+
+#### Getting a Token
+
+1. Open the **Authentication** > **Login** request
+2. Update the username/password in the request body if needed
+3. Click **Send**
+4. Copy the token from the response
+
+#### Using the Token
+
+**Option A: Manual (for single requests)**
+1. Open any protected request (POST, PUT, DELETE)
+2. Go to the **Authorization** tab
+3. Select **Type**: `Bearer Token`
+4. Paste your token in the **Token** field
+
+**Option B: Environment Variable (recommended)**
+1. After logging in, save the token to an environment variable:
+   - Click **Tests** tab in the Login request
+   - Add this script:
+   ```javascript
+   if (pm.response.code === 200) {
+       const response = pm.response.json();
+       pm.environment.set("auth_token", response.data.token);
+   }
+   ```
+2. In protected requests, use `{{auth_token}}` in the Authorization header
+
+**Note:** Tokens expire after 24 hours. Re-run the Login request to get a new token.
+
 ## Collection Structure
 
 The collection is organized into logical folders:
@@ -36,7 +69,10 @@ The collection is organized into logical folders:
 ### 1. Health Check
 - **Get API Health**: Verify the API is running
 
-### 2. Countries
+### 2. Authentication
+- **Login**: Get JWT token for protected operations
+
+### 3. Countries
 - **Get All Countries**: Paginated list of countries
 - **Get Country by ID**: Single country by ID
 - **Get Country by Code**: Single country by ISO code
@@ -45,7 +81,7 @@ The collection is organized into logical folders:
 - **Update Country**: Modify existing country (Admin)
 - **Delete Country**: Remove country (Admin)
 
-### 3. Technologies
+### 4. Technologies
 - **Get All Technologies**: Paginated list with sorting
 - **Get Technology by ID**: Single technology with relations
 - **Get Technologies by Country**: Filter by country code
@@ -53,18 +89,18 @@ The collection is organized into logical folders:
 - **Get Technologies by Status**: Filter by status
 - **Get Technologies by Year Range**: Filter by year range
 - **Search Technologies**: Full-text search
-- **Create Technology**: Add new technology (Admin)
-- **Update Technology**: Modify existing technology (Admin)
-- **Delete Technology**: Remove technology (Admin)
+- **Create Technology**: Add new technology (Admin, requires auth)
+- **Update Technology**: Modify existing technology (Admin, requires auth)
+- **Delete Technology**: Remove technology (Admin, requires auth)
 
-### 4. Categories
+### 5. Categories
 - **Get All Categories**: List all technology categories
 - **Get Category by ID**: Single category by ID
-- **Create Category**: Create a new category
-- **Update Category**: Update an existing category
-- **Delete Category**: Delete a category
+- **Create Category**: Create a new category (requires auth)
+- **Update Category**: Update an existing category (requires auth)
+- **Delete Category**: Delete a category (requires auth)
 
-### 5. Examples - Common Workflows
+### 6. Examples - Common Workflows
 Pre-configured requests for common use cases:
 - Get Turkish Drones
 - Get Recent Technologies (2020-2025)

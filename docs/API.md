@@ -14,6 +14,7 @@
 - [Response Format](#response-format)
 - [Error Codes](#error-codes)
 - [Endpoints](#endpoints)
+  - [Authentication](#authentication-endpoints)
   - [Health Check](#health-check)
   - [Countries API](#countries-api)
   - [Technologies API](#technologies-api)
@@ -37,7 +38,69 @@ The Military Index Backend API provides access to a comprehensive database of mi
 
 ## Authentication
 
-Currently, the API is **publicly accessible** without authentication. Write operations (POST, PUT, DELETE) are available but may require authentication in future versions.
+The API uses **JWT (JSON Web Token)** authentication for write operations.
+
+### Authentication Required
+
+- ✅ **GET requests** - No authentication needed (public read access)
+- 🔒 **POST, PUT, DELETE requests** - JWT token required
+
+### Getting a Token
+
+**Endpoint:** `POST /api/v1/auth/login`
+
+**Request:**
+```bash
+curl -X POST http://localhost:8080/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin",
+    "password": "your-password"
+  }'
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  },
+  "message": "Login successful"
+}
+```
+
+**Token Properties:**
+- **Expiration**: 24 hours
+- **Type**: Bearer token
+- **Algorithm**: HS256
+
+### Using the Token
+
+Include the token in the `Authorization` header for protected requests:
+
+```bash
+curl -X POST http://localhost:8080/api/v1/categories \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE" \
+  -d '{
+    "name": "New Category",
+    "description": "Category description"
+  }'
+```
+
+### Authentication Errors
+
+**401 Unauthorized** - Missing or invalid token:
+```json
+{
+  "success": false,
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "Missing authorization header"
+  }
+}
+```
 
 ---
 
@@ -113,6 +176,65 @@ Error responses include descriptive messages:
 ---
 
 ## Endpoints
+
+### Authentication Endpoints
+
+#### POST /api/v1/auth/login
+
+Authenticate and receive a JWT token for protected operations.
+
+**Request Body:**
+```json
+{
+  "username": "admin",
+  "password": "your-password"
+}
+```
+
+**Request:**
+```bash
+curl -X POST http://localhost:8080/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin",
+    "password": "SecurePassword123!"
+  }'
+```
+
+**Response:** `200 OK`
+```json
+{
+  "success": true,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzM0Mjk2NDAwLCJpYXQiOjE3MzQyMTAwMDAsImlzcyI6Im1pbGl0YXJ5LWluZGV4LWFwaSJ9.xxxxx"
+  },
+  "message": "Login successful"
+}
+```
+
+**Error Response:** `401 Unauthorized`
+```json
+{
+  "success": false,
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "Invalid username or password"
+  }
+}
+```
+
+**Usage:** Save the token and include it in subsequent requests:
+```bash
+export TOKEN="your-token-here"
+
+# Use the token for protected operations
+curl -X POST http://localhost:8080/api/v1/categories \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "New Category"}'
+```
+
+---
 
 ### Health Check
 
